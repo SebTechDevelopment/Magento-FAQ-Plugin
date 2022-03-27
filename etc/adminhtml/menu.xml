@@ -5,9 +5,27 @@
             id="SebTech_FAQTwo::sebtech_question_entity"
             title="FAQ"
             module="SebTech_FAQTwo"
-            sortOrder="9999"
+            sortOrder="99"
             resource="Magento_Backend::content"
             action="faqtwo/question"
+        />
+        <add
+            id="SebTech_FAQTwo::sebtech_question_list"
+            title="Questions"
+            module="SebTech_FAQTwo"
+            sortOrder="99"
+            resource="Magento_Backend::content"
+            action="faqtwo/question"
+            parent="SebTech_FAQTwo::sebtech_question_entity"
+        />
+        <add
+            id="SebTech_FAQTwo::sebtech_category_entity"
+            title="Categories"
+            module="SebTech_FAQTwo"
+
+            resource="Magento_Backend::content"
+            action="faqtwo/category"
+            parent="SebTech_FAQTwo::sebtech_question_entity"
         />
     </menu>
 </config>

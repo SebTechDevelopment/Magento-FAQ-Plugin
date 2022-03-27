@@ -1,0 +1,92 @@
+<?php
+
+declare(strict_types=1);
+
+namespace SebTech\FAQTwo\Controller\Adminhtml\Category;
+
+use Magento\Backend\App\Action\Context;
+use Magento\Backend\Model\View\Result\Redirect;
+use Magento\Framework\App\Request\DataPersistorInterface;
+use Magento\Framework\Exception\LocalizedException;
+use SebTech\FAQTwo\Model\QuestionRepository;
+use Magento\Framework\Controller\ResultInterface;
+use SebTech\FAQTwo\Model\Question;
+use SebTech\FAQTwo\Model\QuestionFactory;
+
+class Save extends \Magento\Backend\App\Action
+{
+
+    protected DataPersistorInterface $dataPersistor;
+    private QuestionRepository $questionRepository;
+    private QuestionFactory $questionFactory;
+
+    /**
+     * @param Context $context
+     * @param DataPersistorInterface $dataPersistor
+     * @param QuestionRepository $questionRepository
+     * @param QuestionFactory $questionFactory
+     */
+    public function __construct(
+        Context $context,
+        DataPersistorInterface $dataPersistor,
+        QuestionRepository $questionRepository,
+        QuestionFactory $questionFactory
+    ) {
+        $this->dataPersistor = $dataPersistor;
+        parent::__construct($context);
+        $this->questionRepository = $questionRepository;
+        $this->questionFactory = $questionFactory;
+    }
+
+    /**
+     * Save action
+     *
+     * @return ResultInterface
+     */
+    public function execute()
+    {
+        /** @var Redirect $resultRedirect */
+        $resultRedirect = $this->resultRedirectFactory->create();
+        $data = $this->getRequest()->getPostValue();
+        if ($data) {
+            $model = $this->questionFactory->create();
+            $id = $this->getRequest()->getParam('id');
+            if ($id) {
+                try {
+                    $model = $this->questionRepository->getById($id);
+                } catch (LocalizedException $e) {
+                    $this->messageManager->addErrorMessage(__('This Question post no longer exists.'));
+                    return $resultRedirect->setPath('*/*/');
+                }
+            }
+            $model->setData($data);
+            try {
+                $this->questionRepository->save($model);
+                $this->messageManager->addSuccessMessage(__('You saved the question post.'));
+                $this->dataPersistor->clear('sebtech_faq');
+                return $this->processQuestionReturn($model, $data, $resultRedirect);
+            } catch (LocalizedException $e) {
+                $this->messageManager->addErrorMessage($e->getMessage());
+            } catch (\Exception $e) {
+                $this->messageManager->addExceptionMessage($e, __('Something went wrong while saving the question.'));
+            }
+            $this->dataPersistor->set('sebtech_question', $data);
+            return $resultRedirect->setPath('*/*/edit', ['id' => $id]);
+        }
+        return $resultRedirect->setPath('*/*/');
+    }
+
+
+    private function processQuestionReturn(Question $model, array $data, ResultInterface $resultRedirect): ResultInterface
+    {
+        $redirect = $data['back'] ?? 'close';
+
+        if ($redirect ==='continue') {
+            $resultRedirect->setPath('*/*/edit', ['id' => $model->getId()]);
+        } elseif ($redirect === 'close') {
+            $resultRedirect->setPath('*/*/');
+        }
+        return $resultRedirect;
+    }
+}
+

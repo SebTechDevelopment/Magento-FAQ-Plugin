@@ -14,4 +14,17 @@
             <column name="id"/>
         </constraint>
     </table>
+    <table name="sebtech_category_two">
+        <column xsi:type="int" name="id" padding="11" unsigned="false" nullable="false" identity="true" comment="ID"/>
+        <column xsi:type="varchar"  length="255" name="title"  nullable="false" comment="Category title"/>
+        <column xsi:type="boolean" name="enabled"  comment="Is Category Enabled"/>
+        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP"
+                comment="Category Creation Time"/>
+        <column xsi:type="timestamp" name="updated_at" on_update="true" nullable="false" default="CURRENT_TIMESTAMP"
+                comment="Category Modification Time"/>
+        <constraint xsi:type="primary"  referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+    </table>
+
 </schema>
