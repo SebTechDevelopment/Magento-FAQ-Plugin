@@ -1,1 +1,15 @@
-<h1>HW</h1>
+<?php
+/** @var $block \Magento\Framework\View\Element\Template */
+/** @var $view \SebTech\FAQTwo\ViewModel\Question */
+$view = $block->getData('question');
+?>
+<h1>FAQ</h1>
+
+<?php foreach($view->getQuestions() as $question): ?>
+    <?php if($question->getEnabled()): ?>
+        <h3><?= $question->getTitle() ?></h3>
+        <hr>
+        <p><?= $question->getAnswer() ?></p>
+        <br>
+    <?php endif ?>
+<?php endforeach; ?>
