@@ -8,34 +8,34 @@ use Magento\Backend\App\Action\Context;
 use Magento\Backend\Model\View\Result\Redirect;
 use Magento\Framework\App\Request\DataPersistorInterface;
 use Magento\Framework\Exception\LocalizedException;
-use SebTech\FAQTwo\Model\QuestionRepository;
+use SebTech\FAQTwo\Model\CategoryRepository;
 use Magento\Framework\Controller\ResultInterface;
-use SebTech\FAQTwo\Model\Question;
-use SebTech\FAQTwo\Model\QuestionFactory;
+use SebTech\FAQTwo\Model\Category;
+use SebTech\FAQTwo\Model\CategoryFactory;
 
 class Save extends \Magento\Backend\App\Action
 {
 
     protected DataPersistorInterface $dataPersistor;
-    private QuestionRepository $questionRepository;
-    private QuestionFactory $questionFactory;
+    private CategoryRepository $categoryRepository;
+    private CategoryFactory $categoryFactory;
 
     /**
      * @param Context $context
      * @param DataPersistorInterface $dataPersistor
-     * @param QuestionRepository $questionRepository
-     * @param QuestionFactory $questionFactory
+     * @param CategoryRepository $categoryRepository
+     * @param CategoryFactory $categoryFactory
      */
     public function __construct(
         Context $context,
         DataPersistorInterface $dataPersistor,
-        QuestionRepository $questionRepository,
-        QuestionFactory $questionFactory
+        CategoryRepository $categoryRepository,
+        CategoryFactory $categoryFactory
     ) {
         $this->dataPersistor = $dataPersistor;
         parent::__construct($context);
-        $this->questionRepository = $questionRepository;
-        $this->questionFactory = $questionFactory;
+        $this->categoryRepository = $categoryRepository;
+        $this->categoryFactory = $categoryFactory;
     }
 
     /**
@@ -49,35 +49,35 @@ class Save extends \Magento\Backend\App\Action
         $resultRedirect = $this->resultRedirectFactory->create();
         $data = $this->getRequest()->getPostValue();
         if ($data) {
-            $model = $this->questionFactory->create();
+            $model = $this->categoryFactory->create();
             $id = $this->getRequest()->getParam('id');
             if ($id) {
                 try {
-                    $model = $this->questionRepository->getById($id);
+                    $model = $this->categoryRepository->getById($id);
                 } catch (LocalizedException $e) {
-                    $this->messageManager->addErrorMessage(__('This Question post no longer exists.'));
+                    $this->messageManager->addErrorMessage(__('This Category post no longer exists.'));
                     return $resultRedirect->setPath('*/*/');
                 }
             }
             $model->setData($data);
             try {
-                $this->questionRepository->save($model);
-                $this->messageManager->addSuccessMessage(__('You saved the question post.'));
+                $this->categoryRepository->save($model);
+                $this->messageManager->addSuccessMessage(__('You saved the category post.'));
                 $this->dataPersistor->clear('sebtech_faq');
-                return $this->processQuestionReturn($model, $data, $resultRedirect);
+                return $this->processCategoryReturn($model, $data, $resultRedirect);
             } catch (LocalizedException $e) {
                 $this->messageManager->addErrorMessage($e->getMessage());
             } catch (\Exception $e) {
-                $this->messageManager->addExceptionMessage($e, __('Something went wrong while saving the question.'));
+                $this->messageManager->addExceptionMessage($e, __('Something went wrong while saving the category.'));
             }
-            $this->dataPersistor->set('sebtech_question', $data);
+            $this->dataPersistor->set('sebtech_category', $data);
             return $resultRedirect->setPath('*/*/edit', ['id' => $id]);
         }
         return $resultRedirect->setPath('*/*/');
     }
 
 
-    private function processQuestionReturn(Question $model, array $data, ResultInterface $resultRedirect): ResultInterface
+    private function processCategoryReturn(Category $model, array $data, ResultInterface $resultRedirect): ResultInterface
     {
         $redirect = $data['back'] ?? 'close';
 

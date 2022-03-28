@@ -2,23 +2,23 @@
 <form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
     <argument name="data" xsi:type="array">
         <item name="js_config" xsi:type="array">
-            <item name="provider" xsi:type="string">faq_index_form.question_form_data_source</item>
+            <item name="provider" xsi:type="string">faq_category_index_form.category_form_data_source</item>
         </item>
         <item name="label" xsi:type="string" translate="true">General Information</item>
         <item name="template" xsi:type="string">templates/form/collapsible</item>
     </argument>
     <settings>
         <buttons>
-            <button name="save" class="SebTech\FAQTwo\Block\Adminhtml\Question\Edit\SaveButton"/>
+            <button name="save" class="SebTech\FAQTwo\Block\Adminhtml\Category\Edit\SaveButton"/>
             <button name="back" class="Magento\Cms\Block\Adminhtml\Block\Edit\BackButton"/>
         </buttons>
-        <namespace>faq_index_form</namespace>
+        <namespace>faq_category_index_form</namespace>
         <dataScope>data</dataScope>
         <deps>
-            <dep>faq_index_form.question_form_data_source</dep>
+            <dep>faq_category_index_form.category_form_data_source</dep>
         </deps>
     </settings>
-    <dataSource name="question_form_data_source">
+    <dataSource name="category_form_data_source">
         <argument name="data" xsi:type="array">
             <item name="js_config" xsi:type="array">
                 <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
@@ -27,7 +27,7 @@
         <settings>
             <submitUrl path="*/*/save"/>
         </settings>
-        <dataProvider class="SebTech\FAQTwo\Model\Question\DataProvider" name="question_form_data_source">
+        <dataProvider class="SebTech\FAQTwo\Model\Category\DataProvider" name="category_form_data_source">
             <settings>
                 <requestFieldName>id</requestFieldName>
                 <primaryFieldName>id</primaryFieldName>
@@ -42,7 +42,7 @@
         <field name="title" sortOrder="20" formElement="input">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="source" xsi:type="string">question</item>
+                    <item name="source" xsi:type="string">category</item>
                 </item>
             </argument>
             <settings>
@@ -50,17 +50,15 @@
                     <rule name="required-entry" xsi:type="boolean">true</rule>
                 </validation>
                 <dataType>text</dataType>
-                <label translate="true">Question</label>
+                <label translate="true">Category</label>
                 <dataScope>title</dataScope>
             </settings>
         </field>
 
-
-
         <field name="enabled" sortOrder="10" formElement="checkbox">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="source" xsi:type="string">question</item>
+                    <item name="source" xsi:type="string">category</item>
                     <item name="default" xsi:type="number">1</item>
                 </item>
             </argument>
@@ -79,34 +77,6 @@
                         <prefer>toggle</prefer>
                     </settings>
                 </checkbox>
-            </formElements>
-        </field>
-
-        <field name="answer" template="ui/form/field" formElement="wysiwyg">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="wysiwygConfigData" xsi:type="array">
-                        <item name="add_variables" xsi:type="boolean">false</item>
-                        <item name="add_widgets" xsi:type="boolean">false</item>
-                        <item name="add_images" xsi:type="boolean">true</item>
-                        <item name="add_directives" xsi:type="boolean">true</item>
-                        <item name="is_pagebuilder_enabled" xsi:type="boolean">false</item>
-                    </item>
-                </item>
-            </argument>
-            <settings>
-                <validation>
-                    <rule name="required-entry" xsi:type="boolean">true</rule>
-                </validation>
-                <label translate="true">Answer</label>
-                <dataScope>answer</dataScope>
-            </settings>
-            <formElements>
-                <wysiwyg>
-                    <settings>
-                        <wysiwyg>true</wysiwyg>
-                    </settings>
-                </wysiwyg>
             </formElements>
         </field>
     </fieldset>

@@ -13,4 +13,18 @@
             </argument>
         </arguments>
     </type>
+
+    <virtualType name="SebTech\FAQTwo\Model\ResourceModel\Category\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">sebtech_category_two</argument>
+            <argument name="resourceModel" xsi:type="string">SebTech\FAQTwo\Model\ResourceModel\Category</argument>
+        </arguments>
+    </virtualType>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="sebtech_faqtwo_category_listing_data_source" xsi:type="string">SebTech\FAQTwo\Model\ResourceModel\Category\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
 </config>

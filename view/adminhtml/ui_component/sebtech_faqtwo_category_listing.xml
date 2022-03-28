@@ -2,35 +2,35 @@
 <listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
     <argument name="data" xsi:type="array">
         <item name="js_config" xsi:type="array">
-            <item name="provider" xsi:type="string">sebtech_faqtwo_question_listing.sebtech_faqtwo_question_listing_data_source</item>
+            <item name="provider" xsi:type="string">sebtech_faqtwo_category_listing.sebtech_faqtwo_category_listing_data_source</item>
         </item>
     </argument>
     <settings>
         <deps>
-            <dep>sebtech_faqtwo_question_listing.sebtech_faqtwo_question_listing_data_source</dep>
+            <dep>sebtech_faqtwo_category_listing.sebtech_faqtwo_category_listing_data_source</dep>
         </deps>
         <buttons>
             <button name="add">
-                <url path="faqtwo/question/create"/>
+                <url path="faqtwo/category/create"/>
                 <class>primary</class>
-                <label translate="true">Add New Question</label>
+                <label translate="true">Add New Category</label>
             </button>
         </buttons>
-        <spinner>sebtech_faqtwo_question_columns</spinner>
+        <spinner>sebtech_faqtwo_category_columns</spinner>
     </settings>
-    <dataSource name="sebtech_faqtwo_question_listing_data_source" component="Magento_Ui/js/grid/provider">
+    <dataSource name="sebtech_faqtwo_category_listing_data_source" component="Magento_Ui/js/grid/provider">
         <settings>
             <updateUrl path="mui/index/render"/>
         </settings>
-        <aclResource>sebtech_faqtwo::question</aclResource>
-        <dataProvider name="sebtech_faqtwo_question_listing_data_source" class="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+        <aclResource>sebtech_faqtwo::category</aclResource>
+        <dataProvider name="sebtech_faqtwo_category_listing_data_source" class="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
             <settings>
                 <requestFieldName>id</requestFieldName>
                 <primaryFieldName>id</primaryFieldName>
             </settings>
         </dataProvider>
     </dataSource>
-    <columns name="sebtech_faqtwo_question_columns">
+    <columns name="sebtech_faqtwo_category_columns">
         <column name="id">
             <settings>
                 <label translate="true">ID</label>
@@ -50,11 +50,6 @@
                 </editor>
                 <dataType>select</dataType>
                 <label translate="true">Status</label>
-            </settings>
-        </column>
-        <column name="answer">
-            <settings>
-                <label translate="true">Answer</label>
             </settings>
         </column>
         <column name="created_at">
