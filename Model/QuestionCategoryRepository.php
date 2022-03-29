@@ -21,18 +21,18 @@ class QuestionCategoryRepository implements QuestionCategoryRelationRepositoryIn
     private QuestionCategoryRelationResource $resource;
     private QuestionCategoryRelationFactory $questionCategoryRelationModelFactory;
     private QuestionCategoryRelationCollectionFactory $questionCategoryRelationCollectionFactory;
-    private QuestionCollectionFactory $blogCollectionFactory;
+    private QuestionCollectionFactory $questionCollectionFactory;
 
     public function __construct(
         QuestionCategoryRelationResource $resource,
         QuestionCategoryRelationModelFactory $questionCategoryRelationModelFactory,
         QuestionCategoryRelationCollectionFactory $questionCategoryRelationCollectionFactory,
-        QuestionCollectionFactory $blogCollectionFactory
+        QuestionCollectionFactory $questionCollectionFactory
     ) {
         $this->resource = $resource;
         $this->questionCategoryRelationModelFactory = $questionCategoryRelationModelFactory;
         $this->questionCategoryRelationCollectionFactory = $questionCategoryRelationCollectionFactory;
-        $this->blogCollectionFactory = $blogCollectionFactory;
+        $this->questionCollectionFactory = $questionCollectionFactory;
     }
 
     public function newModel(): QuestionCategoryModel
@@ -143,7 +143,7 @@ class QuestionCategoryRepository implements QuestionCategoryRelationRepositoryIn
 
     public function getRelatedCategorysByQuestionId(int $questionId): QuestionCollection
     {
-        $collection = $this->blogCollectionFactory->create();
+        $collection = $this->questionCollectionFactory->create();
         $tableName = $collection->getTable(QuestionCategoryRelationResource::TABLE_NAME);
         $collection
             ->addFieldToFilter(
@@ -163,12 +163,12 @@ class QuestionCategoryRepository implements QuestionCategoryRelationRepositoryIn
     {
         $collection = $this->getRelatedCategorysByQuestionId($questionId);
 
-        $blogIds = [];
-        foreach ($collection->getItems() as $blog) {
-            /** @var Question $blog */
-            $blogIds[] = $blog->getId();
+        $questionIds = [];
+        foreach ($collection->getItems() as $question) {
+            /** @var Question $question */
+            $questionIds[] = $question->getId();
         }
 
-        return $blogIds;
+        return $questionIds;
     }
 }
