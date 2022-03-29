@@ -19,41 +19,41 @@ class QuestionCategoryRepository implements QuestionCategoryRelationRepositoryIn
 {
 
     private QuestionCategoryRelationResource $resource;
-    private QuestionCategoryRelationFactory $productBlogRelationModelFactory;
-    private QuestionCategoryRelationCollectionFactory $productBlogRelationCollectionFactory;
+    private QuestionCategoryRelationFactory $questionCategoryRelationModelFactory;
+    private QuestionCategoryRelationCollectionFactory $questionCategoryRelationCollectionFactory;
     private QuestionCollectionFactory $blogCollectionFactory;
 
     public function __construct(
         QuestionCategoryRelationResource $resource,
-        QuestionCategoryRelationModelFactory $productBlogRelationModelFactory,
-        QuestionCategoryRelationCollectionFactory $productBlogRelationCollectionFactory,
+        QuestionCategoryRelationModelFactory $questionCategoryRelationModelFactory,
+        QuestionCategoryRelationCollectionFactory $questionCategoryRelationCollectionFactory,
         QuestionCollectionFactory $blogCollectionFactory
     ) {
         $this->resource = $resource;
-        $this->productBlogRelationModelFactory = $productBlogRelationModelFactory;
-        $this->productBlogRelationCollectionFactory = $productBlogRelationCollectionFactory;
+        $this->questionCategoryRelationModelFactory = $questionCategoryRelationModelFactory;
+        $this->questionCategoryRelationCollectionFactory = $questionCategoryRelationCollectionFactory;
         $this->blogCollectionFactory = $blogCollectionFactory;
     }
 
     public function newModel(): QuestionCategoryModel
     {
-        return $this->productBlogRelationModelFactory->create();
+        return $this->questionCategoryRelationModelFactory->create();
     }
 
     public function newCollection(): QuestionCategoryRelationCollection
     {
-        return $this->productBlogRelationCollectionFactory->create();
+        return $this->questionCategoryRelationCollectionFactory->create();
     }
 
     public function create(int $categoryId, int $questionId): QuestionCategoryModel
     {
-        $productBlogRelationModel = $this->newModel()
+        $questionCategoryRelationModel = $this->newModel()
             ->setCategoryId($categoryId)
             ->setQuestionId($questionId);
 
-        $this->save($productBlogRelationModel);
+        $this->save($questionCategoryRelationModel);
 
-        return $productBlogRelationModel;
+        return $questionCategoryRelationModel;
     }
 
     public function save(\SebTech\FAQTwo\Api\Data\QuestionCategoryRelationInterface $relation): QuestionCategoryRelationInterface
@@ -147,13 +147,13 @@ class QuestionCategoryRepository implements QuestionCategoryRelationRepositoryIn
         $tableName = $collection->getTable(QuestionCategoryRelationResource::TABLE_NAME);
         $collection
             ->addFieldToFilter(
-                'product_blog_relation.product_id',
+                'faq_category_faq_question_relation.id',
                 $questionId
             )
             ->getSelect()
             ->joinLeft(
-                ['product_blog_relation' => $tableName],
-                'main_table.blog_id = product_blog_relation.blog_id'
+                ['faq_category_faq_question_relation' => $tableName],
+                'main_table.id = faq_category_faq_question_relation.id'
             );
 
         return $collection;
