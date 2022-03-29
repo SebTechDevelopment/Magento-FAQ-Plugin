@@ -2,7 +2,7 @@
 <schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
     <table name="sebtech_question_two">
-        <column xsi:type="int" name="id" padding="11" unsigned="false" nullable="false" identity="true" comment="ID"/>
+        <column xsi:type="int" name="id" padding="11" unsigned="true" nullable="false" identity="true" comment="ID"/>
         <column xsi:type="varchar"  length="255" name="title"  nullable="false" comment="Question title"/>
         <column xsi:type="text" name="answer" nullable="false" comment="Answer content"/>
         <column xsi:type="boolean" name="enabled"  comment="Is question Enabled"/>
@@ -15,7 +15,7 @@
         </constraint>
     </table>
     <table name="sebtech_category_two">
-        <column xsi:type="int" name="id" padding="11" unsigned="false" nullable="false" identity="true" comment="ID"/>
+        <column xsi:type="int" name="id" padding="11" unsigned="true" nullable="false" identity="true" comment="ID"/>
         <column xsi:type="varchar"  length="255" name="title"  nullable="false" comment="Category title"/>
         <column xsi:type="boolean" name="enabled"  comment="Is Category Enabled"/>
         <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP"
@@ -25,6 +25,35 @@
         <constraint xsi:type="primary"  referenceId="PRIMARY">
             <column name="id"/>
         </constraint>
+    </table>
+
+    <table name="faq_category_faq_question_relation">
+        <column xsi:type="int" name="relation_id" padding="11" identity="true"
+                unsigned="true" nullable="false" comment="Entity ID"/>
+        <column xsi:type="int" name="question_id" padding="11" identity="false"
+                unsigned="true" nullable="false" comment="Related Question ID"/>
+        <column xsi:type="int" name="category_id" padding="11" identity="false"
+                unsigned="true" nullable="false" comment="Category Blog ID"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="relation_id"/>
+            <column name="question_id"/>
+            <column name="category_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="PROD_BLOG_REL_PROD_ID_PROD_ID"
+                    table="faq_question_faq_category_relation" column="question_id"
+                    referenceTable="sebtech_question_two" referenceColumn="id"
+                    onDelete="CASCADE"/>
+        <constraint xsi:type="foreign" referenceId="PROD_BLOG_REL_BLOG_ID_BLOG_ID"
+                    table="faq_category_faq_question_relation" column="category_id"
+                    referenceTable="sebtech_category_two" referenceColumn="id"
+                    onDelete="CASCADE"/>
+        <constraint xsi:type="unique" referenceId="PROD_BLOG_REL_PROD_ID_BLOG_ID_KEY">
+            <column name="question_id"/>
+            <column name="category_id"/>
+        </constraint>
+        <index referenceId="PROD_BLOG_REL_PROD_ID_INDEX" indexType="btree">
+            <column name="question_id"/>
+        </index>
     </table>
 
 </schema>
