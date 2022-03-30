@@ -41,6 +41,20 @@
                 <label translate="true">Title</label>
             </settings>
         </column>
+
+        <!--        Category Field In Grid-->
+        <column name="category" component="Magento_Ui/js/grid/columns/link" sortOrder="76">
+            <settings>
+                <filter>select</filter>
+                <dataType>select</dataType>
+                <sortable>false</sortable>
+                <label translate="true">Category</label>
+            </settings>
+        </column>
+
+        <!--        Category Field In Grid-->
+
+
         <column name="enabled" component="Magento_Ui/js/grid/columns/select">
             <settings>
                 <options class="SebTech\FAQTwo\Model\Question\IsActive"/>
@@ -69,4 +83,20 @@
         </column>
         <actionsColumn name="actions" class="SebTech\FAQTwo\Ui\Component\Listing\Column\Actions"/>
     </columns>
+
+    <dataSource name="sebtech_faqtwo_question_listing_data_source" component="Magento_Ui/js/grid/provider">
+        <settings>
+            <storageConfig>
+                <param name="dataScope" xsi:type="string">category</param>
+            </storageConfig>
+            <updateUrl path="mui/index/render"/>
+        </settings>
+        <aclResource>Magento_Catalog::products</aclResource>
+        <dataProvider class="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider" name="sebtech_faqtwo_question_listing_data_source">
+            <settings>
+                <requestFieldName>id</requestFieldName>
+                <primaryFieldName>question_id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
 </listing>

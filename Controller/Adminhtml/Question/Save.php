@@ -8,34 +8,44 @@ use Magento\Backend\App\Action\Context;
 use Magento\Backend\Model\View\Result\Redirect;
 use Magento\Framework\App\Request\DataPersistorInterface;
 use Magento\Framework\Exception\LocalizedException;
+use SebTech\FAQTwo\Model\QuestionCategoryRelation;
+use SebTech\FAQTwo\Model\QuestionCategoryRepository;
 use SebTech\FAQTwo\Model\QuestionRepository;
 use Magento\Framework\Controller\ResultInterface;
 use SebTech\FAQTwo\Model\Question;
 use SebTech\FAQTwo\Model\QuestionFactory;
+use SebTech\FAQTwo\Model\QuestionCategoryRelationFactory;
 
 class Save extends \Magento\Backend\App\Action
 {
-
     protected DataPersistorInterface $dataPersistor;
     private QuestionRepository $questionRepository;
     private QuestionFactory $questionFactory;
+    private QuestionCategoryRelationFactory $questionCategoryRelationFactory;
+    private QuestionCategoryRepository $questionCategoryRepository;
 
     /**
      * @param Context $context
      * @param DataPersistorInterface $dataPersistor
      * @param QuestionRepository $questionRepository
      * @param QuestionFactory $questionFactory
+     * @param QuestionCategoryRelationFactory $questionCategoryRelationFactory
+     * @param QuestionCategoryRepository $questionCategoryRepository
      */
     public function __construct(
-        Context $context,
-        DataPersistorInterface $dataPersistor,
-        QuestionRepository $questionRepository,
-        QuestionFactory $questionFactory
+        Context                         $context,
+        DataPersistorInterface          $dataPersistor,
+        QuestionRepository              $questionRepository,
+        QuestionFactory                 $questionFactory,
+        QuestionCategoryRelationFactory $questionCategoryRelationFactory,
+        QuestionCategoryRepository      $questionCategoryRepository
     ) {
-        $this->dataPersistor = $dataPersistor;
         parent::__construct($context);
+        $this->dataPersistor = $dataPersistor;
         $this->questionRepository = $questionRepository;
         $this->questionFactory = $questionFactory;
+        $this->questionCategoryRelationFactory = $questionCategoryRelationFactory;
+        $this->questionCategoryRepository = $questionCategoryRepository;
     }
 
     /**
@@ -50,6 +60,7 @@ class Save extends \Magento\Backend\App\Action
         $data = $this->getRequest()->getPostValue();
         if ($data) {
             $model = $this->questionFactory->create();
+            $questionCategoryRelationModel = $this->questionCategoryRelationFactory->create();
             $id = $this->getRequest()->getParam('id');
             if ($id) {
                 try {
@@ -60,8 +71,17 @@ class Save extends \Magento\Backend\App\Action
                 }
             }
             $model->setData($data);
+
+
             try {
+                /** Save Model */
                 $this->questionRepository->save($model);
+
+                /** Save relation */
+                $questionCategoryRelationModel->setCategoryId((int)$this->getRequest()->getParam('category_id'));
+                $questionCategoryRelationModel->setQuestionId((int)$model->getId());
+                $this->questionCategoryRepository->save($questionCategoryRelationModel);
+
                 $this->messageManager->addSuccessMessage(__('You saved the question post.'));
                 $this->dataPersistor->clear('sebtech_faq');
                 return $this->processQuestionReturn($model, $data, $resultRedirect);

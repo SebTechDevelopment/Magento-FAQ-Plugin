@@ -28,8 +28,8 @@
         </arguments>
     </type>
 
-    <preference for="SebTech\FAQTwo\Api\Data\QuestionCategoryRelationInterface"
-                type="SebTech\FAQTwo\Model\QuestionCategoryRelation"/>
+    <preference for="SebTech\FAQTwo\Api\Data\QuestionCategoryRelationInterface" type="SebTech\FAQTwo\Model\QuestionCategoryRelation"/>
+
 
 
 </config>
