@@ -6,7 +6,9 @@ $view = $block->getData('question_view_model');
 $questions = $view->getQuestions();
 ?>
 <div id="question-view" data-bind="scope: 'question'">
-    <!-- ko template: getTemplate() --><!-- /ko -->
+    <div  data-bind="blockLoader: isLoading">
+        <!-- ko template: getTemplate() --><!-- /ko -->
+    </div>
 </div>
 
 <script type="text/x-magento-init">
@@ -26,4 +28,18 @@ $questions = $view->getQuestions();
     }
 </script>
 
-
+<div id="faq-question-loader" data-role="abc-loader" class="loading-mask" data-mage-init='{"SebTech_FAQTwo/js/loader": {}}'>
+    <div class="loader">
+        <img src="<?= /* @escapeNotVerified */ $block->getViewFileUrl('images/loader-1.gif') ?>"
+             alt="<?= /* @escapeNotVerified */__('Loading...') ?>" style="position: absolute;">
+    </div>
+</div>
+<script>
+    require([
+        'mage/url',
+        'Magento_Ui/js/block-loader'
+    ], function (url, blockLoader) {
+        blockLoader("<?= /* @escapeNotVerified */ $block->getViewFileUrl('images/loader-1.gif') ?>");
+        return url.setBaseUrl('<?= /* @escapeNotVerified */ $block->getBaseUrl() ?>');
+    });
+</script>

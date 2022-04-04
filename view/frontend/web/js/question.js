@@ -9,10 +9,12 @@ define([
             title: "FAQ Homepage",
             template: 'SebTech_FAQTwo/question',
             totalQuestions: 0,
+            isLoading: true,
             questionsData: [],
             tracks: {
                 questionsData: true,
-                totalQuestions: true
+                totalQuestions: true,
+                isLoading: true,
             }
         },
 
@@ -39,6 +41,7 @@ define([
             var self = this;
             self.questionsData = this.getQuestionsData();
             self.totalQuestions = this.getTotalQuestions();
+            self.isLoading = false;
         }
     })
 })
