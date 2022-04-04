@@ -1,0 +1,16 @@
+<div>
+    <h1 data-bind="text: title"></h1>
+
+    <span>Amount of questions: </span><span data-bind="text: totalQuestions"></span>
+
+    <br>
+
+    <!-- ko foreach: { data: getQuestions(), as: 'item' } -->
+
+        <li data-bind="text: item.id"></li>
+        <li data-bind="text: item.price"></li>
+    <!-- /ko -->
+
+
+
+</div>

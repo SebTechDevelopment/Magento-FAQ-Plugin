@@ -2,9 +2,18 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
         <referenceContainer name="content">
-            <block name="question.view" template="SebTech_FAQTwo::view.phtml" >
+            <block name="question.view" template="SebTech_FAQTwo::view.phtml">
                 <arguments>
-                    <argument xsi:type="object" name="question">SebTech\FAQTwo\ViewModel\Question</argument>
+                    <argument name="jsLayout" xsi:type="array">
+                        <item name="components" xsi:type="array">
+                            <item name="question" xsi:type="array">
+                                <item name="component" xsi:type="string">
+                                    SebTech_FAQTwo/js/question
+                                </item>
+                            </item>
+                        </item>
+                    </argument>
+                    <argument name="question_view_model" xsi:type="object">SebTech\FAQTwo\ViewModel\Question</argument>
                 </arguments>
             </block>
         </referenceContainer>

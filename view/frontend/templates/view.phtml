@@ -1,15 +1,30 @@
 <?php
 /** @var $block \Magento\Framework\View\Element\Template */
 /** @var $view \SebTech\FAQTwo\ViewModel\Question */
-$view = $block->getData('question');
-?>
-<h1>FAQ</h1>
 
-<?php foreach($view->getQuestions() as $question): ?>
-    <?php if($question->getEnabled()): ?>
-        <h3><?= $question->getTitle() ?></h3>
-        <hr>
-        <p><?= $question->getAnswer() ?></p>
-        <br>
-    <?php endif ?>
-<?php endforeach; ?>
+$view = $block->getData('question_view_model');
+$questions = $view->getQuestions();
+?>
+<div id="question-view" data-bind="scope: 'question'">
+    <!-- ko template: getTemplate() --><!-- /ko -->
+</div>
+
+
+<script type="text/x-magento-init">
+    {
+        "#question-view": {
+            "Magento_Ui/js/core/app": {
+                "components": {
+                    "question": {
+                        "component": "SebTech_FAQTwo/js/question",
+                        "config": {
+                            "questions": <?= $view->getQuestionsAsJson() ?>
+                        }
+                    }
+                }
+            }
+        }
+    }
+</script>
+
+

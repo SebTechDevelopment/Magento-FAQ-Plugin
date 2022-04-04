@@ -33,4 +33,9 @@ class Question implements ArgumentInterface
     {
         return $this->collectionQuestion->getItems();
     }
+
+    public function getQuestionsAsJson()
+    {
+        return json_encode($this->getQuestions());
+    }
 }
