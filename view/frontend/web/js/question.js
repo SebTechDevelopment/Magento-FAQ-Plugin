@@ -21,16 +21,17 @@ define([
         },
 
         getTotalQuestions: function() {
-           return Object.keys(this.questionsData).length
+            var totalQuestions = 0;
+            this.questionsData.forEach(function (question) {
+                if(question.enabled === "1") {
+                    totalQuestions++
+                }
+            })
+            return totalQuestions;
         },
 
         getQuestions: function() {
-            var something = Object.entries(this.questionsData);
-
-            something.forEach(function (item) {
-                console.log(item.title)
-            })
-
+            return this.questionsData;
         },
 
         initialize: function() {

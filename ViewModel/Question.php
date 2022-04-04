@@ -34,8 +34,14 @@ class Question implements ArgumentInterface
         return $this->collectionQuestion->getItems();
     }
 
-    public function getQuestionsAsJson()
+    public function getQuestionsAsArray()
     {
-        return json_encode($this->getQuestions());
+        $questions = $this->getQuestions();
+        $result = [];
+        foreach($questions as $question) {
+            $result[] = $question->toArray();
+        }
+
+        return $result;
     }
 }

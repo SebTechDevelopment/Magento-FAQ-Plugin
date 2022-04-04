@@ -9,7 +9,6 @@ $questions = $view->getQuestions();
     <!-- ko template: getTemplate() --><!-- /ko -->
 </div>
 
-
 <script type="text/x-magento-init">
     {
         "#question-view": {
@@ -18,7 +17,7 @@ $questions = $view->getQuestions();
                     "question": {
                         "component": "SebTech_FAQTwo/js/question",
                         "config": {
-                            "questions": <?= $view->getQuestionsAsJson() ?>
+                            "questions": <?= json_encode($view->getQuestionsAsArray()) ?>
                         }
                     }
                 }

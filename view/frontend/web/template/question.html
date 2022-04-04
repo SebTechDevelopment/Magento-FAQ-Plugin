@@ -1,16 +1,21 @@
 <div>
     <h1 data-bind="text: title"></h1>
+    <!-- ko if: getTotalQuestions() == 0 -->
+    <div class="messages">
 
-    <span>Amount of questions: </span><span data-bind="text: totalQuestions"></span>
-
-    <br>
-
-    <!-- ko foreach: { data: getQuestions(), as: 'item' } -->
-
-        <li data-bind="text: item.id"></li>
-        <li data-bind="text: item.price"></li>
+        <div class="message-notice notice message">
+            <span>No FAQ answers available.</span>
+        </div>
+    </div>
     <!-- /ko -->
-
-
-
+    <span>Amount of questions: </span><span data-bind="text: getTotalQuestions()"></span>
+    <!-- ko foreach: { data: getQuestions(), as: 'question' } -->
+        <!-- ko if: question.enabled == true && getTotalQuestions() > 1 -->
+        <div>
+            <h4 data-bind="text: question.title"></h4>
+            <span data-bind="html: question.answer"></span>
+            <span data-bind="text: question.updated_at"></span>
+        </div>
+        <!-- /ko -->
+    <!-- /ko -->
 </div>
