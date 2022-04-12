@@ -1,6 +1,6 @@
 <?php
 /** @var $block \Magento\Framework\View\Element\Template */
-/** @var $view \SebTech\FAQTwo\ViewModel\Question */
+/** @var $view \SebTech\FAQTwo\ViewModel\Config */
 
 $view = $block->getData('question_view_model');
 $questions = $view->getQuestions();
@@ -19,7 +19,8 @@ $questions = $view->getQuestions();
                     "question": {
                         "component": "SebTech_FAQTwo/js/question",
                         "config": {
-                            "questions": <?= json_encode($view->getQuestionsAsArray()) ?>
+                            "questions": <?= json_encode($view->getQuestionsAsArray()) ?>,
+                            "categories": <?= json_encode($view->getCategoriesAsArray()) ?>
                         }
                     }
                 }

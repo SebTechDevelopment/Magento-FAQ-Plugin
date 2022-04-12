@@ -9,13 +9,24 @@
     </div>
     <!-- /ko -->
     <span>Amount of questions: </span><span data-bind="text: getTotalQuestions()"></span>
-    <!-- ko foreach: { data: getQuestions(), as: 'question' } -->
-        <!-- ko if: question.enabled === "1" -->
-        <div>
-            <h4 data-bind="text: question.title"></h4>
-            <span data-bind="html: question.answer"></span>
-            <span data-bind="text: question.updated_at"></span>
+    <div class="question-row">
+        <div class="question-column-left">
+            <!-- ko foreach: { data: getCategories(), as: 'category' } -->
+                <h4 data-bind="text: category.title"></h4>
+            <!-- /ko -->
         </div>
-        <!-- /ko -->
-    <!-- /ko -->
+        <div class="question-column-right">
+            <!-- ko foreach: { data: getQuestions(), as: 'question' } -->
+            <!-- ko if: question.enabled === "1" -->
+            <div>
+                <h4 data-bind="text: question.title"></h4>
+                <span data-bind="html: question.answer"></span>
+                <span data-bind="text: question.updated_at"></span>
+            </div>
+            <!-- /ko -->
+            <!-- /ko -->
+        </div>
+    </div>
+
+
 </div>

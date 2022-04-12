@@ -13,7 +13,7 @@
                             </item>
                         </item>
                     </argument>
-                    <argument name="question_view_model" xsi:type="object">SebTech\FAQTwo\ViewModel\Question</argument>
+                    <argument name="question_view_model" xsi:type="object">SebTech\FAQTwo\ViewModel\Config</argument>
                 </arguments>
             </block>
         </referenceContainer>

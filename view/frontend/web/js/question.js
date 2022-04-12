@@ -11,15 +11,21 @@ define([
             totalQuestions: 0,
             isLoading: true,
             questionsData: [],
+            categoryData: [],
             tracks: {
                 questionsData: true,
                 totalQuestions: true,
                 isLoading: true,
+                categoryData: true,
             }
         },
 
         getQuestionsData: function() {
             return this.questions;
+        },
+
+        getCategoriesData: function () {
+            return this.categories;
         },
 
         getTotalQuestions: function() {
@@ -36,10 +42,15 @@ define([
             return this.questionsData;
         },
 
+        getCategories: function() {
+            return this.categoryData;
+        },
+
         initialize: function() {
             this._super();
             var self = this;
             self.questionsData = this.getQuestionsData();
+            self.categoryData = this.getCategoriesData();
             self.totalQuestions = this.getTotalQuestions();
             self.isLoading = false;
         }
