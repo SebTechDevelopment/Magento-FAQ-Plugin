@@ -6,6 +6,7 @@
         <column xsi:type="varchar"  length="255" name="title"  nullable="false" comment="Question title"/>
         <column xsi:type="text" name="answer" nullable="false" comment="Answer content"/>
         <column xsi:type="boolean" name="enabled"  comment="Is question Enabled"/>
+        <column xsi:type="int" name="category_id" comment="Id of related category" nullable="true" />
         <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP"
                 comment="Question Creation Time"/>
         <column xsi:type="timestamp" name="updated_at" on_update="true" nullable="false" default="CURRENT_TIMESTAMP"
