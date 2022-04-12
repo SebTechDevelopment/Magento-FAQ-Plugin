@@ -10,6 +10,7 @@ define([
             template: 'SebTech_FAQTwo/question',
             totalQuestions: 0,
             isLoading: true,
+            allQuestions: [],
             questionsData: [],
             categoryData: [],
             tracks: {
@@ -17,6 +18,7 @@ define([
                 totalQuestions: true,
                 isLoading: true,
                 categoryData: true,
+                allQuestions: true,
             }
         },
 
@@ -46,9 +48,13 @@ define([
             return this.categoryData;
         },
 
+        getQuestionsByCategory: function(category) {
+            console.log(this.getQuestionsData)
+        },
+
         initialize: function() {
             this._super();
-            var self = this;
+            const self = this;
             self.questionsData = this.getQuestionsData();
             self.categoryData = this.getCategoriesData();
             self.totalQuestions = this.getTotalQuestions();
