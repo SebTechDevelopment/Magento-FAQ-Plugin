@@ -1,7 +1,7 @@
 <div>
     <h1 data-bind="text: title"></h1>
     <span>Amount of questions: </span><span data-bind="text: getTotalQuestions()"></span>
-    <div class="question-row">
+    <div data-bind="css: getTotalCategories() == 0 ? 'question-row-without-category' : 'question-row'">
         <div>
             <!-- ko foreach: { data: getCategories(), as: 'category' } -->
             <span data-bind="click: $parent.getQuestionsByCategory.bind($parent)">
@@ -11,24 +11,21 @@
         </div>
         <div>
             <!-- ko if: getTotalQuestions() == 0 -->
-            <div class="messages">
-                <div class="message-notice notice message">
-                    <span>No FAQ answers available.</span>
-                </div>`
-            </div>
+                <div class="messages">
+                    <div class="message-notice notice message">
+                        <span>No FAQ answers available.</span>
+                    </div>
+                </div>
             <!-- /ko -->
-
             <!-- ko foreach: { data: getQuestions(), as: 'question' } -->
-            <!-- ko if: question.enabled === "1" -->
-            <div>
-                <h4 data-bind="text: question.title"></h4>
-                <span data-bind="html: question.answer"></span>
-                <span data-bind="text: question.updated_at"></span>
-            </div>
-            <!-- /ko -->
+                <!-- ko if: question.enabled === "1" -->
+                <div>
+                    <h4 data-bind="text: question.title"></h4>
+                    <span data-bind="html: question.answer"></span>
+                    <span data-bind="text: question.updated_at"></span>
+                </div>
+                <!-- /ko -->
             <!-- /ko -->
         </div>
     </div>
-
-
 </div>

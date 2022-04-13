@@ -40,6 +40,16 @@ define([
             return totalQuestions;
         },
 
+        getTotalCategories: function() {
+            let totalCategories = 0;
+            this.categoryData.forEach(function (category) {
+                if(category.enabled === "1") {
+                    totalCategories++
+                }
+            })
+            return totalCategories;
+        },
+
         getQuestions: function() {
             return this.questionsData;
         },
