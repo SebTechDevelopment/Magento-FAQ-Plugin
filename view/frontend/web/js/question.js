@@ -31,7 +31,7 @@ define([
         },
 
         getTotalQuestions: function() {
-            var totalQuestions = 0;
+            let totalQuestions = 0;
             this.questionsData.forEach(function (question) {
                 if(question.enabled === "1") {
                     totalQuestions++
@@ -49,13 +49,21 @@ define([
         },
 
         getQuestionsByCategory: function(category) {
-            console.log(this.getQuestionsData)
+            let categoryId = category.id;
+            this.questionsData = [];
+
+            this.allQuestions.forEach(question => {
+                if(question.category_id === categoryId) {
+                    this.questionsData.push(question);
+                }
+            })
         },
 
         initialize: function() {
             this._super();
             const self = this;
             self.questionsData = this.getQuestionsData();
+            self.allQuestions = this.getQuestionsData();
             self.categoryData = this.getCategoriesData();
             self.totalQuestions = this.getTotalQuestions();
             self.isLoading = false;

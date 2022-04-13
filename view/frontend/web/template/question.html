@@ -12,7 +12,7 @@
     <div class="question-row">
         <div class="question-column-left">
             <!-- ko foreach: { data: getCategories(), as: 'category' } -->
-            <span data-bind="click: $parent.getQuestionsByCategory">
+            <span data-bind="click: $parent.getQuestionsByCategory.bind($parent)">
                 <h4 data-bind="text: category.title"></h4>
             </span>
             <!-- /ko -->
