@@ -2,14 +2,14 @@
     <h1 data-bind="text: title"></h1>
     <span>Amount of questions: </span><span data-bind="text: getTotalQuestions()"></span>
     <div class="question-row">
-        <div class="question-column-left">
+        <div>
             <!-- ko foreach: { data: getCategories(), as: 'category' } -->
             <span data-bind="click: $parent.getQuestionsByCategory.bind($parent)">
                 <h4 data-bind="text: category.title"></h4>
             </span>
             <!-- /ko -->
         </div>
-        <div class="question-column-right">
+        <div>
             <!-- ko if: getTotalQuestions() == 0 -->
             <div class="messages">
                 <div class="message-notice notice message">

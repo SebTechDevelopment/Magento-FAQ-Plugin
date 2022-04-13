@@ -1,16 +1,6 @@
 & when (@media-common = true) {
-    .question-column-left {
-        float: left;
-        width: 30%;
-    }
-    .question-column-right {
-        float: right;
-        width: 70%;
-    }
-
-    .question-row:after {
-        content: "";
-        display: table;
-        clear: both;
+    .question-row {
+        display: grid;
+        grid-template-columns: 1fr 3fr;
     }
 }
